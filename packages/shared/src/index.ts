@@ -76,28 +76,21 @@ function freshnessScore(hours: number): number {
 }
 
 export function buildFeed({ user, videos }: FeedRequest): RankedFeedItem[] {
-  const creatorFrequency = new Map<string, number>();
-
-  return videos
+  const rankedVideos = videos
     .map((video) => {
       const interestMatch = overlapScore(user.interests, video.categories);
-      const diversityPenalty = creatorFrequency.has(video.creatorId) ? 0.08 : 0;
-      creatorFrequency.set(video.creatorId, (creatorFrequency.get(video.creatorId) ?? 0) + 1);
-
-      const score = Number(
+      const baseScore = Number(
         (
           interestMatch * 0.35 +
           video.averageWatchTime * 0.30 +
           video.engagementRate * 0.20 +
-          freshnessScore(video.freshnessHours) * 0.15 -
-          diversityPenalty
+          freshnessScore(video.freshnessHours) * 0.15
         ).toFixed(3),
       );
 
       return {
-        videoId: video.id,
-        title: video.title,
-        score,
+        video,
+        baseScore,
         reasons: [
           interestMatch > 0 ? 'interest-match' : 'exploration',
           video.averageWatchTime > 0.8 ? 'high-watch-time' : 'steady-watch-time',
@@ -105,7 +98,44 @@ export function buildFeed({ user, videos }: FeedRequest): RankedFeedItem[] {
         ],
       };
     })
-    .sort((left, right) => right.score - left.score);
+    .sort((left, right) => right.baseScore - left.baseScore || left.video.id.localeCompare(right.video.id));
+
+  const creatorFrequency = new Map<string, number>();
+  const remainingVideos = [...rankedVideos];
+  const rankedFeed: RankedFeedItem[] = [];
+
+  while (remainingVideos.length > 0) {
+    let nextIndex = 0;
+    let nextScore = -Infinity;
+
+    for (const [index, candidate] of remainingVideos.entries()) {
+      const diversityPenalty = creatorFrequency.has(candidate.video.creatorId) ? 0.08 : 0;
+      const adjustedScore = Number((candidate.baseScore - diversityPenalty).toFixed(3));
+
+      if (
+        adjustedScore > nextScore ||
+        (adjustedScore === nextScore && candidate.baseScore > remainingVideos[nextIndex].baseScore) ||
+        (adjustedScore === nextScore &&
+          candidate.baseScore === remainingVideos[nextIndex].baseScore &&
+          candidate.video.id.localeCompare(remainingVideos[nextIndex].video.id) < 0)
+      ) {
+        nextIndex = index;
+        nextScore = adjustedScore;
+      }
+    }
+
+    const [selectedVideo] = remainingVideos.splice(nextIndex, 1);
+    creatorFrequency.set(selectedVideo.video.creatorId, (creatorFrequency.get(selectedVideo.video.creatorId) ?? 0) + 1);
+
+    rankedFeed.push({
+      videoId: selectedVideo.video.id,
+      title: selectedVideo.video.title,
+      score: nextScore,
+      reasons: selectedVideo.reasons,
+    });
+  }
+
+  return rankedFeed;
 }
 
 export function matchCampaigns({ user, activeCategories, campaigns }: CampaignMatchRequest): RankedCampaignMatch[] {

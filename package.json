@@ -10,5 +10,8 @@
     "dev": "node apps/api/dist/apps/api/src/index.js",
     "lint": "tsc -p packages/shared/tsconfig.json --noEmit && tsc -p apps/api/tsconfig.json --noEmit && tsc -p apps/web/tsconfig.json --noEmit",
     "test": "npm run build && node --test tests/**/*.test.mjs"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
   }
 }

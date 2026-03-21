@@ -73,3 +73,51 @@ test('matchCampaigns filters campaigns by user fit and safety', () => {
   assert.equal(result.length, 1);
   assert.equal(result[0]?.campaignId, 'safe');
 });
+
+test('buildFeed applies creator diversity based on ranked order instead of input order', () => {
+  const videos = [
+    {
+      id: 'alpha',
+      title: 'Alpha clip',
+      creatorId: 'creator-a',
+      categories: ['music'],
+      freshnessHours: 0,
+      engagementRate: 0.8,
+      averageWatchTime: 0.95,
+      monetizable: true,
+    },
+    {
+      id: 'beta',
+      title: 'Beta clip',
+      creatorId: 'creator-a',
+      categories: ['music'],
+      freshnessHours: 2,
+      engagementRate: 0.7,
+      averageWatchTime: 0.88,
+      monetizable: true,
+    },
+    {
+      id: 'gamma',
+      title: 'Gamma clip',
+      creatorId: 'creator-b',
+      categories: ['music'],
+      freshnessHours: 1,
+      engagementRate: 0.75,
+      averageWatchTime: 0.87,
+      monetizable: true,
+    },
+  ];
+
+  const ranked = buildFeed({ user, videos });
+  const reversed = buildFeed({ user, videos: [...videos].reverse() });
+
+  assert.deepEqual(
+    ranked.map((item) => item.videoId),
+    ['alpha', 'gamma', 'beta'],
+  );
+  assert.deepEqual(
+    reversed.map((item) => item.videoId),
+    ranked.map((item) => item.videoId),
+  );
+  assert.ok(ranked[2].score < ranked[1].score);
+});
