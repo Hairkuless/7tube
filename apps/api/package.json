@@ -1,6 +1,5 @@
 {
-  "name": "@seventube/web",
-  "name": "@7tube/web",
+  "name": "@seventube/api",
   "private": true,
   "version": "0.1.0",
   "type": "module"
