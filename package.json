@@ -1,0 +1,33 @@
+{
+  "name": "7tube",
+  "private": true,
+  "version": "0.1.0",
+  "scripts": {
+    "build": "npm run build:shared && npm run build:api && npm run build:web",
+    "build:shared": "tsc -p packages/shared/tsconfig.json",
+    "build:api": "tsc -p apps/api/tsconfig.json",
+    "build:web": "tsc -p apps/web/tsconfig.json && cp apps/web/src/index.html apps/web/dist/index.html && cp apps/web/src/styles.css apps/web/dist/styles.css",
+    "dev": "node apps/api/dist/apps/api/src/index.js",
+    "lint": "tsc -p packages/shared/tsconfig.json --noEmit && tsc -p apps/api/tsconfig.json --noEmit && tsc -p apps/web/tsconfig.json --noEmit",
+    "test": "npm run build && node --test tests/**/*.test.mjs"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  "description": "Monorepo scaffold for the 7tube short-video platform.",
+  "type": "module",
+  "workspaces": [
+    "apps/*",
+    "services/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "check": "node scripts/check.mjs",
+    "dev:api": "node services/api/src/server.js",
+    "dev:web": "node -e \"console.log('Open apps/web/src/index.html in a browser for the static prototype.')\"",
+    "test": "npm run check"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}
