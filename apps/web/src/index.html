@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>7tube | Creator Feed Prototype</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="left-rail">
+        <div>
+          <p class="eyebrow">7tube</p>
+          <h1>Short-video platform starter</h1>
+          <p class="muted">
+            Monorepo-ready structure for feed ranking, ads matching, analytics,
+            and creator growth workflows.
+          </p>
+        </div>
+
+        <section class="card metric-grid">
+          <div>
+            <span class="metric-label">Daily active viewers</span>
+            <strong>182K</strong>
+          </div>
+          <div>
+            <span class="metric-label">CTR uplift target</span>
+            <strong>+17%</strong>
+          </div>
+          <div>
+            <span class="metric-label">Ad fill rate</span>
+            <strong>93%</strong>
+          </div>
+          <div>
+            <span class="metric-label">Avg. session</span>
+            <strong>14m</strong>
+          </div>
+        </section>
+
+        <section class="card">
+          <h2>Delivery phases</h2>
+          <ol>
+            <li>MVP feed, auth, uploads, moderation</li>
+            <li>Ads marketplace and targeting rules</li>
+            <li>Recommendations, analytics, subscriptions</li>
+          </ol>
+        </section>
+      </aside>
+
+      <main class="feed-column">
+        <header class="feed-header card">
+          <div>
+            <p class="eyebrow">Experience</p>
+            <h2>For You feed</h2>
+          </div>
+          <button type="button">Open API docs</button>
+        </header>
+
+        <section id="feed" class="feed-list"></section>
+      </main>
+
+      <aside class="right-rail">
+        <section class="card">
+          <h2>System blocks</h2>
+          <ul>
+            <li>API gateway + auth</li>
+            <li>Feed orchestration service</li>
+            <li>Ads matching engine</li>
+            <li>Analytics + event pipeline</li>
+            <li>Search, moderation, notifications</li>
+          </ul>
+        </section>
+
+        <section class="card">
+          <h2>Design principles</h2>
+          <ul>
+            <li>Composable packages for web/mobile/backend</li>
+            <li>Event-driven side effects</li>
+            <li>Observability from day one</li>
+            <li>Performance budgets for video UX</li>
+          </ul>
+        </section>
+      </aside>
+    </div>
+
+    <script type="module" src="./main.js"></script>
+  </body>
+</html>
