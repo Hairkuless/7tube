@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>7tube | Platform Control Center</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="left-rail">
+        <section class="card hero-card">
+          <p class="eyebrow">7tube</p>
+          <h1>Control center for the short-video platform buildout.</h1>
+          <p class="muted">
+            A richer repository prototype that ties feed ranking, creator intelligence,
+            ad decisions, roadmap visibility, and API-backed UI states together.
+          </p>
+          <div class="hero-actions">
+            <a class="button-link" href="http://127.0.0.1:7070/api/platform/overview" target="_blank" rel="noreferrer">Platform overview</a>
+            <a class="button-link secondary" href="http://127.0.0.1:7070/api/feed" target="_blank" rel="noreferrer">Feed JSON</a>
+          </div>
+        </section>
+
+        <section class="card">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Metrics</p>
+              <h2>Operational snapshot</h2>
+            </div>
+            <span id="api-status" class="status-pill loading">Checking API…</span>
+          </div>
+          <div id="metric-grid" class="metric-grid"></div>
+        </section>
+
+        <section class="card">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Roadmap</p>
+              <h2>Delivery phases</h2>
+            </div>
+          </div>
+          <div id="roadmap-list" class="stack-list"></div>
+        </section>
+      </aside>
+
+      <main class="feed-column">
+        <header class="feed-header card">
+          <div>
+            <p class="eyebrow">Experience</p>
+            <h2>For You feed and monetization decisions</h2>
+            <p class="muted">Live data loads from the local API when available, with graceful fallback to repository seed data.</p>
+          </div>
+        </header>
+
+        <section id="feed" class="feed-list"></section>
+      </main>
+
+      <aside class="right-rail">
+        <section class="card">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Creators</p>
+              <h2>High-signal creators</h2>
+            </div>
+          </div>
+          <div id="creator-list" class="stack-list"></div>
+        </section>
+
+        <section class="card">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Architecture</p>
+              <h2>System blocks</h2>
+            </div>
+          </div>
+          <ul id="infrastructure-list" class="plain-list"></ul>
+        </section>
+      </aside>
+    </div>
+
+    <script type="module" src="./main.js"></script>
+  </body>
+</html>
