@@ -13,21 +13,5 @@
   },
   "devDependencies": {
     "typescript": "^5.9.3"
-  "description": "Monorepo scaffold for the 7tube short-video platform.",
-  "type": "module",
-  "workspaces": [
-    "apps/*",
-    "services/*",
-    "packages/*"
-  ],
-  "scripts": {
-    "build": "node scripts/build.mjs",
-    "check": "node scripts/check.mjs",
-    "dev:api": "node services/api/src/server.js",
-    "dev:web": "node -e \"console.log('Open apps/web/src/index.html in a browser for the static prototype.')\"",
-    "test": "npm run check"
-  },
-  "engines": {
-    "node": ">=22"
   }
 }
