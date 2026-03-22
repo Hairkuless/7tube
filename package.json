@@ -1,0 +1,11 @@
+{
+  "name": "7tube",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "check": "node scripts/check.mjs"
+  }
+}
